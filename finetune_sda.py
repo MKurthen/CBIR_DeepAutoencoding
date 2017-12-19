@@ -24,12 +24,10 @@ except ImportError:
     import Image
 
 
-pretrain_lr=0.1
-pretrain_lr_binary = 1e-2
 
 batch_size=128
 
-with h5py.File('../deep_learning_files/flickr_32x32.hdf5') as f:
+with h5py.File('./deep_learning_data/flickr_32x32.hdf5') as f:
     X = f['X'][:] 
 
 X_std = np.std(X)
@@ -67,14 +65,8 @@ sda = Linear_SdA(
     hidden_layers_sizes=[8192, 4096, 2048, 1024, 512, 256]
 )
 
-pretraining_epochs = 500
-pretrain_lr=0.1
 corruption_levels = [.3, .2, .1, .05, .025, .01]
 
-
-print ('... getting the pretraining functions')
-pretraining_fns = sda.pretraining_functions(train_set_x=train_set_x,
-                                            batch_size=batch_size)
 
 # load parameters from previous training 
 parameters = pickle.load(open('deep_learning_data/sda_parameters.p', 'rb'))
@@ -82,8 +74,8 @@ for value, param in zip(parameters, sda.params):
     param.set_value(value)
 
 # FINETUNING THE MODEL #
-finetune_lr=1e-4
-training_epochs=100
+finetune_lr = 2e-3
+training_epochs = 1000 
 patience = 1000 * n_train_batches  # look as this many examples regardless
 patience_increase = 2.  # wait this much longer when a new best is
                         # found
@@ -151,6 +143,11 @@ while (epoch < training_epochs) and (not done_looping):
         if patience <= iter:
             done_looping = True
             break
+    if epoch % 100 == 0:
+        # save the parameters everyy 100 epochs
+        parameters = [param.get_value() for param in sda.params]
+        pickle.dump(parameters, open('deep_learning_data/sda_parameters_intermediate.p', 'wb'))
+
 
 # save the parameters
 parameters = [param.get_value() for param in sda.params]
