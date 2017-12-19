@@ -1,0 +1,12 @@
+to train the 256 bit sda for 32px thumbnails:
+1. make sure dataset (.hdf5 file) is available. Code to create data in notebooks/prepare_dataset.ipynb
+2. run pretrain_sda_1.py
+3. run pretrain_sda_2.py
+4. run finetune_sda.py
+5. check the reconstruction error vie get_sda_reconstruction_error.py
+6. get the codes as hdf5 table via get_sda_codes.py
+
+for varpatches repeat the same above with the _varpatch suffixes in filenames
+
+the above scripts will store databaseas and files (codes as .hdf5 files, sda parameters as python pickle files) in the deep_learning_data directory
+

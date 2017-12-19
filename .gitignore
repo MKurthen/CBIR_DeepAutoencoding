@@ -4,3 +4,4 @@ flickr_*
 .zip
 *.zip
 deep_learning_data/*
+*__pycache__*
