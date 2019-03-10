@@ -1,6 +1,6 @@
 Content Based Image Retrieval Via Deep Autoencoding - An approach based on http://www.cs.toronto.edu/~fritz/absps/esann-deep-final.pdf
 
-For a showcase see the Jupyter Notebooks
+For a showcase see the https://github.com/MKurthen/SimilarImageViaDeepAutoencoding/blob/master/notebooks/DeepAutoEncodingSimilarImageSearch.ipynb 
 
 to train the 256 bit sda for 32px thumbnails:
 1. make sure dataset (.hdf5 file) is available. Code to create data in notebooks/prepare_dataset.ipynb
